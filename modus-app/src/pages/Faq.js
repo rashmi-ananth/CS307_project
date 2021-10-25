@@ -7,7 +7,8 @@ import "./Faq.css";
 
 function Faq() {
   return (
-    <div>
+    <div className="FAQ">
+      <h1>FAQ</h1>
       <Accordion>
         <AccordionSummary aria-controls="panel1a-content" id="panel1a-header">
           <Typography>Accordion 1</Typography>
