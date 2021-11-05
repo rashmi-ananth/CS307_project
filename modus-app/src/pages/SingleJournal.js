@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Button, Card, Grid, IconButton } from "@mui/material";
 import { makeStyles } from '@mui/styles';
 import DeleteIcon from '@mui/icons-material/Delete';
-import {deleteJournalEntry, searchByTitle, getMHResources} from "../firebase";
+import {deleteJournalEntry, searchByTitle} from "../firebase";
 import { useHistory, useParams } from "react-router";
 import ReactPDF from '@react-pdf/renderer';
 
@@ -40,6 +40,8 @@ function SingleJournal() {
       alert("Journal entry deleted");
     }) 
   }
+
+
 
   const submitExport = (entry) => {
     ReactPDF.render(<MyDocument entry={entry}/>, `${__dirname}/journal_entry.pdf`);
