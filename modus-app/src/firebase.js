@@ -181,26 +181,19 @@ const deleteUserData = async () => {
 // the caller must check if entry already exists (check by title?)
 export const submitJournalEntry = async (title, text) => {
     const jid = getJID();
-    const moodAnalysis = getMoodAnalysis(text);
-    console.log(title);
-    console.log(text);
+    //const moodAnalysis = getMoodAnalysis(text);
+    //console.log(title);
+    //console.log(text);
+    //console.log(moodAnalysis['t2eEntry']);
     //plotPieChart(moodAnalysis.t2eEntry);
-    await db.collection('users').doc(auth.currentUser.email).collection('journalEntries').doc(jid).set({
+    /* await db.collection('users').doc(auth.currentUser.email).collection('journalEntries').doc(jid).set({
         jid: jid,
         text: text,
         title: title,
         createdAt: Date.now(),
         status: 'submitted',
-        t2eEntryMoodAnalysis: moodAnalysis.t2eEntry,
-        t2eSentMoodAnalysis: moodAnalysis.t2eSent,
-        polarityEntryMoodAnalysis: 0.7,
-        //moodAnalysis.polarEntry,
-        polaritySentMoodAnalysis: moodAnalysis.polarSent
-        //t2eEntryMoodAnalysis: '',
-        //t2eSentMoodAnalysis: '',
-        //polarityEntryMoodAnalysis: '',
-        //polaritySentMoodAnalysis: ''
-    })
+    }) */
+    getMoodAnalysis(jid, text, title);
     console.log('done')
 
 }
@@ -395,18 +388,30 @@ function getJID() {
     return uuidv4()
 }
 
-function getMoodAnalysis(text) {
-    var moodDict = {t2eEntry: '', t2eSent:'', polarEntry:'', polarSent:''};
+export const getMoodAnalysis = async (jid, text, title) =>  {
+    var moodDict = {'t2eEntry': {}, 't2eSent': {}, 'polarEntry': {}, 'polarSent': {}}
     $.post({
         url: "http://127.0.0.1:5000/moodanalysis?text=" + text,
       }).done(function(response) {
         console.log(response);
-        moodDict.t2eEntry = response.data.t2e_entry_analysis;
-        moodDict.t2eSent = response.data.t2e_sent_analysis;
-        moodDict.polarEntry = response.data.polarity_entry_analysis;
-        moodDict.polarSent = response.data.polarity_sent_analysis;
+        //console.log(response.data.t2e_entry_analysis);
+        moodDict['t2eEntry'] = response.data.t2e_entry_analysis;
+        //console.log(moodDict['t2eEntry']);
+        moodDict['t2eSent'] = response.data.t2e_sent_analysis;
+        moodDict['polarEntry'] = response.data.polarity_entry_analysis;
+        moodDict['polarSent'] = response.data.polarity_sent_analysis;
       });
-      return moodDict;
+      await db.collection('users').doc(auth.currentUser.email).collection('journalEntries').doc(jid).set({
+        jid: jid,
+        text: text,
+        title: title,
+        createdAt: Date.now(),
+        status: 'submitted',
+        t2eEntryMoodAnalysis: moodDict['t2eEntry'],
+        t2eSentMoodAnalysis: moodDict['t2eSent'],
+        polarityEntryMoodAnalysis: moodDict['polarEntry'],
+        polaritySentMoodAnalysis: moodDict['polarSent']
+    });
 }
 
 // submit passes moodDict t2e to this func
