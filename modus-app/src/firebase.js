@@ -10,6 +10,7 @@ import { SignOut } from './App';
 import $ from 'jquery';
 // import * as Plotly from 'plotly.js';
 import { useHistory } from "react-router-dom";
+import {orderBy} from "firebase/firebase-firestore";
 
 
 const firebaseConfig = {
@@ -193,7 +194,7 @@ export const submitJournalEntry = async (title, text) => {
         status: 'submitted',
         t2eEntryMoodAnalysis: moodAnalysis.t2eEntry,
         t2eSentMoodAnalysis: moodAnalysis.t2eSent,
-        polarityEntryMoodAnalysis: 0.7,
+        polarityEntryMoodAnalysis: moodAnalysis.polarEntry,
         //moodAnalysis.polarEntry,
         polaritySentMoodAnalysis: moodAnalysis.polarSent
         //t2eEntryMoodAnalysis: '',
@@ -353,6 +354,62 @@ export const searchByTitle = async (title) => {
     var result = []
     const q = query(collection(db.collection('users').
     doc(auth.currentUser.email), 'journalEntries'), where("title", "==", title));
+
+    const querySnapshot = await getDocs(q.withConverter(entryConverter))
+    querySnapshot.forEach((doc) => {
+      const entry = doc.data()
+      result.push(entry)
+    //   console.log("search by title: ", title, entry)
+    });
+    return result
+}
+
+export const sortByTitleAsc = async () => {
+    var result = []
+    const q = query(collection(db.collection('users').
+    doc(auth.currentUser.email), 'journalEntries'), orderBy('title', 'asc'));
+
+    const querySnapshot = await getDocs(q.withConverter(entryConverter))
+    querySnapshot.forEach((doc) => {
+      const entry = doc.data()
+      result.push(entry)
+    //   console.log("search by title: ", title, entry)
+    });
+    return result
+}
+
+export const sortByTitleDesc = async () => {
+    var result = []
+    const q = query(collection(db.collection('users').
+    doc(auth.currentUser.email), 'journalEntries'), orderBy('title', 'desc'));
+
+    const querySnapshot = await getDocs(q.withConverter(entryConverter))
+    querySnapshot.forEach((doc) => {
+      const entry = doc.data()
+      result.push(entry)
+    //   console.log("search by title: ", title, entry)
+    });
+    return result
+}
+
+export const sortByDateAsc = async () => {
+    var result = []
+    const q = query(collection(db.collection('users').
+    doc(auth.currentUser.email), 'journalEntries'), orderBy('createdAt', 'asc'));
+
+    const querySnapshot = await getDocs(q.withConverter(entryConverter))
+    querySnapshot.forEach((doc) => {
+      const entry = doc.data()
+      result.push(entry)
+    //   console.log("search by title: ", title, entry)
+    });
+    return result
+}
+
+export const sortByDateDesc = async () => {
+    var result = []
+    const q = query(collection(db.collection('users').
+    doc(auth.currentUser.email), 'journalEntries'), orderBy('createdAt', 'desc'));
 
     const querySnapshot = await getDocs(q.withConverter(entryConverter))
     querySnapshot.forEach((doc) => {
