@@ -90,6 +90,11 @@ function NavBar() {
       icon: <QuestionAnswerIcon color="#FFFFFF" />,
       path: "/faq",
     },
+    {
+      text: "Logout",
+      icon: <LogoutIcon color="#FFFFFF" />,
+      path: "/",
+    },
   ];
 
   return (
