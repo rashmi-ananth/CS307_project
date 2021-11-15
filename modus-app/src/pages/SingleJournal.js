@@ -76,7 +76,9 @@ function SingleJournal() {
                     margin:20
                   }}
             >
-              {entry && entry[0].text}
+              {entry && <div  dangerouslySetInnerHTML={{__html: entry[0].text}} />}
+              
+              
             </Grid>
             <Grid item xs 
                   style={{

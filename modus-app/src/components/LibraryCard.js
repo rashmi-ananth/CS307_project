@@ -45,7 +45,7 @@ function LibraryCard( {entry} ) {
                 </Grid>
               </Grid>
               <Grid item xs>
-                {entry.text}
+                <div  dangerouslySetInnerHTML={{__html: entry.text}} />
               </Grid>
               <Grid item xs 
                     style={{

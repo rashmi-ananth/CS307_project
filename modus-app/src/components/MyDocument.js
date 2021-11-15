@@ -17,12 +17,15 @@ const styles = StyleSheet.create({
 
 // Create Document Component
 function MyDocument({data}) {
+  const journalContentHTML = <div  dangerouslySetInnerHTML={{__html: data.text}} />
   return (
     <Document>
       <Page size="A4" style={styles.page}>
         <View style={styles.section}>
           <Text>{data.title}</Text>
-          <Text>{data.text}</Text>
+        </View>
+        <View style={styles.section}>
+          <Text>{journalContentHTML}</Text>
         </View>
       </Page>
     </Document>
