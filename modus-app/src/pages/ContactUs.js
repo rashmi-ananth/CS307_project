@@ -5,6 +5,18 @@ const Contact = () => {
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
   const [emailSent, setEmailSent] = useState(false);
+
+  const submit = () => {
+    if (name && email && message) {
+      setName("");
+      setEmail("");
+      setMessage("");
+      setEmailSent(true);
+    } else {
+      alert("Some fields are missing!");
+    }
+  };
+
   return (
     <div id="contact-form">
       <input
