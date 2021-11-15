@@ -1,0 +1,27 @@
+{
+  "dependencies": {
+    "firebase": "^9.4.1",
+    "react": "^17.0.2"
+  },
+  "name": "cs307_project",
+  "description": "### Problem Statement Mental health problems are on the rise among several individuals in today’s society. Quite often, these problems occur when individuals repress their emotions or are unable to fully understand them. They can benefit from tools that help facilitate the silos between their moods and the comprehension of their emotions. As a result, they can lead healthier lives by learning and understanding patterns within their moods.",
+  "version": "1.0.0",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rashmi-ananth/CS307_project.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rashmi-ananth/CS307_project/issues"
+  },
+  "homepage": "https://github.com/rashmi-ananth/CS307_project#readme"
+}

@@ -10,6 +10,7 @@ import { SignOut } from './App';
 import $ from 'jquery';
 // import * as Plotly from 'plotly.js';
 import { useHistory } from "react-router-dom";
+import {orderBy} from "firebase/firebase-firestore";
 
 
 const firebaseConfig = {
@@ -181,11 +182,12 @@ const deleteUserData = async () => {
 // the caller must check if entry already exists (check by title?)
 export const submitJournalEntry = async (title, text) => {
     const jid = getJID();
-    const moodAnalysis = getMoodAnalysis(text);
-    console.log(title);
-    console.log(text);
+    //const moodAnalysis = getMoodAnalysis(text);
+    //console.log(title);
+    //console.log(text);
+    //console.log(moodAnalysis['t2eEntry']);
     //plotPieChart(moodAnalysis.t2eEntry);
-    await db.collection('users').doc(auth.currentUser.email).collection('journalEntries').doc(jid).set({
+    /* await db.collection('users').doc(auth.currentUser.email).collection('journalEntries').doc(jid).set({
         jid: jid,
         text: text,
         title: title,
@@ -193,14 +195,14 @@ export const submitJournalEntry = async (title, text) => {
         status: 'submitted',
         t2eEntryMoodAnalysis: moodAnalysis.t2eEntry,
         t2eSentMoodAnalysis: moodAnalysis.t2eSent,
-        polarityEntryMoodAnalysis: 0.7,
+        polarityEntryMoodAnalysis: moodAnalysis.polarEntry,
         //moodAnalysis.polarEntry,
         polaritySentMoodAnalysis: moodAnalysis.polarSent
         //t2eEntryMoodAnalysis: '',
         //t2eSentMoodAnalysis: '',
         //polarityEntryMoodAnalysis: '',
         //polaritySentMoodAnalysis: ''
-    })
+    })*/
     console.log('done')
 
 }
@@ -363,6 +365,62 @@ export const searchByTitle = async (title) => {
     return result
 }
 
+export const sortByTitleAsc = async () => {
+    var result = []
+    const q = query(collection(db.collection('users').
+    doc(auth.currentUser.email), 'journalEntries'), orderBy('title', 'asc'));
+
+    const querySnapshot = await getDocs(q.withConverter(entryConverter))
+    querySnapshot.forEach((doc) => {
+      const entry = doc.data()
+      result.push(entry)
+    //   console.log("search by title: ", title, entry)
+    });
+    return result
+}
+
+export const sortByTitleDesc = async () => {
+    var result = []
+    const q = query(collection(db.collection('users').
+    doc(auth.currentUser.email), 'journalEntries'), orderBy('title', 'desc'));
+
+    const querySnapshot = await getDocs(q.withConverter(entryConverter))
+    querySnapshot.forEach((doc) => {
+      const entry = doc.data()
+      result.push(entry)
+    //   console.log("search by title: ", title, entry)
+    });
+    return result
+}
+
+export const sortByDateAsc = async () => {
+    var result = []
+    const q = query(collection(db.collection('users').
+    doc(auth.currentUser.email), 'journalEntries'), orderBy('createdAt', 'asc'));
+
+    const querySnapshot = await getDocs(q.withConverter(entryConverter))
+    querySnapshot.forEach((doc) => {
+      const entry = doc.data()
+      result.push(entry)
+    //   console.log("search by title: ", title, entry)
+    });
+    return result
+}
+
+export const sortByDateDesc = async () => {
+    var result = []
+    const q = query(collection(db.collection('users').
+    doc(auth.currentUser.email), 'journalEntries'), orderBy('createdAt', 'desc'));
+
+    const querySnapshot = await getDocs(q.withConverter(entryConverter))
+    querySnapshot.forEach((doc) => {
+      const entry = doc.data()
+      result.push(entry)
+    //   console.log("search by title: ", title, entry)
+    });
+    return result
+}
+
 export const searchByDate = async (date) => {
     var millis = getMillisFromDate(date)
     var upperLimit = 86400000 + millis // adding 24 hours
@@ -395,30 +453,42 @@ function getJID() {
     return uuidv4()
 }
 
-function getMoodAnalysis(text) {
-    var moodDict = {t2eEntry: '', t2eSent:'', polarEntry:'', polarSent:''};
+export const getMoodAnalysis = async (jid, text, title) =>  {
+    var moodDict = {'t2eEntry': {}, 't2eSent': {}, 'polarEntry': {}, 'polarSent': {}}
     $.post({
         url: "http://127.0.0.1:5000/moodanalysis?text=" + text,
       }).done(function(response) {
         console.log(response);
-        moodDict.t2eEntry = response.data.t2e_entry_analysis;
-        moodDict.t2eSent = response.data.t2e_sent_analysis;
-        moodDict.polarEntry = response.data.polarity_entry_analysis;
-        moodDict.polarSent = response.data.polarity_sent_analysis;
+        //console.log(response.data.t2e_entry_analysis);
+        moodDict['t2eEntry'] = response.data.t2e_entry_analysis;
+        //console.log(moodDict['t2eEntry']);
+        moodDict['t2eSent'] = response.data.t2e_sent_analysis;
+        moodDict['polarEntry'] = response.data.polarity_entry_analysis;
+        moodDict['polarSent'] = response.data.polarity_sent_analysis;
       });
-      return moodDict;
+      await db.collection('users').doc(auth.currentUser.email).collection('journalEntries').doc(jid).set({
+        jid: jid,
+        text: text,
+        title: title,
+        createdAt: Date.now(),
+        status: 'submitted',
+        t2eEntryMoodAnalysis: moodDict['t2eEntry'],
+        t2eSentMoodAnalysis: moodDict['t2eSent'],
+        polarityEntryMoodAnalysis: moodDict['polarEntry'],
+        polaritySentMoodAnalysis: moodDict['polarSent']
+    });
 }
 
 // submit passes moodDict t2e to this func
-function plotPieChart(dict_t2e) {
-    var data = [{
-        values: Object.values(dict_t2e),
-        labels: Object.keys(dict_t2e),
-        type: 'pie'
-    }];
-    var layout = {
-        height: 400,
-        width: 500
-    };
-    // Plotly.newPlot('myDiv', data, layout);
-}
+// function plotPieChart(dict_t2e) {
+//     var data = [{
+//         values: Object.values(dict_t2e),
+//         labels: Object.keys(dict_t2e),
+//         type: 'pie'
+//     }];
+//     var layout = {
+//         height: 400,
+//         width: 500
+//     };
+//     Plotly.newPlot('myDiv', data, layout);
+// }

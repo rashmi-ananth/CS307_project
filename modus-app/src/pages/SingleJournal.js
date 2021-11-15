@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { Button, Card, Grid, IconButton } from "@mui/material";
+import { Card, Grid } from "@mui/material";
 import { makeStyles } from '@mui/styles';
-import DeleteIcon from '@mui/icons-material/Delete';
-import {deleteJournalEntry, searchByTitle, getMHResources} from "../firebase";
+import {searchByTitle} from "../firebase";
 import { useParams } from "react-router";
 import { PDFDownloadLink } from "@react-pdf/renderer";
 
