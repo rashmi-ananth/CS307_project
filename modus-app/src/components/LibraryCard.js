@@ -7,9 +7,9 @@ import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles({
   card: {
-    width: 300,
+    width: 275,
     padding: 20,
-    margin: 15
+    margin: 10
   },
 });
 
