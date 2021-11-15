@@ -41,16 +41,6 @@ function SingleJournal() {
     }) 
   }
 
-<<<<<<< HEAD
-
-
-  const submitExport = (entry) => {
-    ReactPDF.render(<MyDocument entry={entry}/>, `${__dirname}/journal_entry.pdf`);
-  }
-  
-  
-=======
->>>>>>> 140ff5e4c243e1c4c93cb7cbca7149f6030af610
   const classes = useStyles();
     return (
       <div>
