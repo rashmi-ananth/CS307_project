@@ -22,8 +22,8 @@ function CreateAccount() {
   }, [user, loading]);
 
   return (
-    <div>
-      <h2>Create Account</h2>
+    <div className="registerPage">
+      <h2 className="header">Create Account</h2>
       <input
         type="text"
         placeholder="Full Name"
