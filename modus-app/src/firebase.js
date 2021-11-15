@@ -10,6 +10,7 @@ import { SignOut } from './App';
 import $ from 'jquery';
 // import * as Plotly from 'plotly.js';
 import { useHistory } from "react-router-dom";
+import {orderBy} from "firebase/firebase-firestore";
 
 
 const firebaseConfig = {
@@ -20,14 +21,14 @@ const firebaseConfig = {
   messagingSenderId: "738850813503",
   appId: "1:738850813503:web:e7e97619a1eaa6510daa8a",
   measurementId: "G-84F8J1Y1VY",
-//   apiKey: "AIzaSyCzMuDRDmQMFsvabbAuOzi_ca8wz-fdjcY",
-//   authDomain: "modusai.firebaseapp.com",
-//   databaseURL: "https://modusai-default-rtdb.firebaseio.com",
-//   projectId: "modusai",
-//   storageBucket: "modusai.appspot.com",
-//   messagingSenderId: "986175331521",
-//   appId: "1:986175331521:web:1da20cf1eab28207060840",
-//   measurementId: "G-JCXJ2W0FTL",
+  // apiKey: "AIzaSyCzMuDRDmQMFsvabbAuOzi_ca8wz-fdjcY",
+  // authDomain: "modusai.firebaseapp.com",
+  // databaseURL: "https://modusai-default-rtdb.firebaseio.com",
+  // projectId: "modusai",
+  // storageBucket: "modusai.appspot.com",
+  // messagingSenderId: "986175331521",
+  // appId: "1:986175331521:web:1da20cf1eab28207060840",
+  // measurementId: "G-JCXJ2W0FTL",
 };
 
 
@@ -192,8 +193,16 @@ export const submitJournalEntry = async (title, text) => {
         title: title,
         createdAt: Date.now(),
         status: 'submitted',
-    }) */
-    getMoodAnalysis(jid, text, title);
+        t2eEntryMoodAnalysis: moodAnalysis.t2eEntry,
+        t2eSentMoodAnalysis: moodAnalysis.t2eSent,
+        polarityEntryMoodAnalysis: moodAnalysis.polarEntry,
+        //moodAnalysis.polarEntry,
+        polaritySentMoodAnalysis: moodAnalysis.polarSent
+        //t2eEntryMoodAnalysis: '',
+        //t2eSentMoodAnalysis: '',
+        //polarityEntryMoodAnalysis: '',
+        //polaritySentMoodAnalysis: ''
+    })*/
     console.log('done')
 
 }
@@ -346,6 +355,62 @@ export const searchByTitle = async (title) => {
     var result = []
     const q = query(collection(db.collection('users').
     doc(auth.currentUser.email), 'journalEntries'), where("title", "==", title));
+
+    const querySnapshot = await getDocs(q.withConverter(entryConverter))
+    querySnapshot.forEach((doc) => {
+      const entry = doc.data()
+      result.push(entry)
+    //   console.log("search by title: ", title, entry)
+    });
+    return result
+}
+
+export const sortByTitleAsc = async () => {
+    var result = []
+    const q = query(collection(db.collection('users').
+    doc(auth.currentUser.email), 'journalEntries'), orderBy('title', 'asc'));
+
+    const querySnapshot = await getDocs(q.withConverter(entryConverter))
+    querySnapshot.forEach((doc) => {
+      const entry = doc.data()
+      result.push(entry)
+    //   console.log("search by title: ", title, entry)
+    });
+    return result
+}
+
+export const sortByTitleDesc = async () => {
+    var result = []
+    const q = query(collection(db.collection('users').
+    doc(auth.currentUser.email), 'journalEntries'), orderBy('title', 'desc'));
+
+    const querySnapshot = await getDocs(q.withConverter(entryConverter))
+    querySnapshot.forEach((doc) => {
+      const entry = doc.data()
+      result.push(entry)
+    //   console.log("search by title: ", title, entry)
+    });
+    return result
+}
+
+export const sortByDateAsc = async () => {
+    var result = []
+    const q = query(collection(db.collection('users').
+    doc(auth.currentUser.email), 'journalEntries'), orderBy('createdAt', 'asc'));
+
+    const querySnapshot = await getDocs(q.withConverter(entryConverter))
+    querySnapshot.forEach((doc) => {
+      const entry = doc.data()
+      result.push(entry)
+    //   console.log("search by title: ", title, entry)
+    });
+    return result
+}
+
+export const sortByDateDesc = async () => {
+    var result = []
+    const q = query(collection(db.collection('users').
+    doc(auth.currentUser.email), 'journalEntries'), orderBy('createdAt', 'desc'));
 
     const querySnapshot = await getDocs(q.withConverter(entryConverter))
     querySnapshot.forEach((doc) => {

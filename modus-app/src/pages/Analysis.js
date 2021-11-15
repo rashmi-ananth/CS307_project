@@ -3,8 +3,19 @@ import {Grid, Divider} from '@mui/material'
 import MoodResources from "../components/MoodResources";
 import graph_1 from '../imgs/graph_1.png';
 import graph_2 from '../imgs/graph_2.png';
+import {getrecommendedMHResources} from "../firebase";
+import { useEffect } from "react";
 
 function Analysis() {
+  // var [entries, setEntries] = React.useState(null);
+  // useEffect(() => {
+  //   const promise = getrecommendedMHResources();
+  //   promise.then(function(result) {
+  //     setEntries(result);
+  //   })
+  // }, 
+  // []);
+
     return (
         <div>
           <Grid container style={{margin: '5rem'}}>
@@ -26,6 +37,11 @@ function Analysis() {
                 </Grid>
               </Grid>
           </Grid>
+          {/* <Grid item>
+          {entries && entries.map((entry) => {
+            return (<MoodResources entry={entry}/>)
+          })}
+          </Grid> */}
           <MoodResources />
         </div>
       );

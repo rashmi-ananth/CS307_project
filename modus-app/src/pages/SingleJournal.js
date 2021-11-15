@@ -2,9 +2,8 @@ import React, { useEffect, useState } from "react";
 import { Button, Card, Grid, IconButton } from "@mui/material";
 import { makeStyles } from '@mui/styles';
 import DeleteIcon from '@mui/icons-material/Delete';
-import {deleteJournalEntry, searchByTitle, getMHResources} from "../firebase";
+import {deleteJournalEntry, searchByTitle} from "../firebase";
 import { useHistory, useParams } from "react-router";
-import ReactPDF from '@react-pdf/renderer';
 import { PDFDownloadLink } from "@react-pdf/renderer";
 
 import MyDocument from '../components/MyDocument.js'
@@ -42,11 +41,16 @@ function SingleJournal() {
     }) 
   }
 
+<<<<<<< HEAD
+
+
   const submitExport = (entry) => {
     ReactPDF.render(<MyDocument entry={entry}/>, `${__dirname}/journal_entry.pdf`);
   }
   
   
+=======
+>>>>>>> 140ff5e4c243e1c4c93cb7cbca7149f6030af610
   const classes = useStyles();
     return (
       <div>
@@ -95,13 +99,9 @@ function SingleJournal() {
           </Grid>
       </Card>
       <Grid style={{marginLeft: 200}}>
-        {/* <Button variant="contained" onClick={() => submitExport(entry)}>
-          Export Mood Analysis
-        </Button> */}
         {entry && 
            <PDFDownloadLink
            document={<MyDocument data={entry[0]} />}
-           // document={<MyDocument />}
            fileName="journal.pdf"
          > 
            Export journal entry 

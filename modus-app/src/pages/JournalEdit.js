@@ -25,7 +25,10 @@ const optionsWithLabelChange = {
   },
 };
 
-const onClick = async (options) => {
+
+
+const onClick = async (options, myValue, textfield, history) => {
+  
   const result = await confirm(
     "Are you sure you want to submit your journal?",
     options
@@ -43,6 +46,7 @@ function JournalEdit() {
   const [myValue, setValue] = useState("");
   const [textfield, setValue2] = useState("");
   const [value, setValue3] = useState("");
+  
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -89,7 +93,7 @@ function JournalEdit() {
             </button>
             <button
               onClick={() => {
-                onClick(optionsWithLabelChange);
+                onClick(optionsWithLabelChange, myValue, textfield);
               }}
             >
               {" "}
@@ -97,7 +101,8 @@ function JournalEdit() {
             </button>
             <button
               className="submit"
-              onClick={() => submitJournalEntry(myValue, textfield)}
+              onClick={() => submitJournalEntry(myValue, textfield)
+                }
               //onClick={() => getMoodAnalysis(textfield)}
             >
               Submit
