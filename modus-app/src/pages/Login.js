@@ -25,8 +25,8 @@ function Login() {
 
   return (
     <div className="loginPage">
-      {/* <h2>Log in </h2> */}
       <div className="loginContainer">
+        <h2 className="header">Log in </h2>
         <input
           type="text"
           placeholder="Email Address "
@@ -55,13 +55,13 @@ function Login() {
           {" "}
           Login with Facebook{" "}
         </button>
-        <a href="/reset">Forget your password?</a>
-        <a href="/register">Create account</a>
-        <input
-          type="checkbox"
-          name="save_login_state"
-          label="Keep me signed in"
-        />
+        <a className="forget" href="/reset">
+          Forget your password?
+        </a>
+        <br></br>
+        <a className="register" href="/register">
+          Create account
+        </a>
       </div>
     </div>
   );

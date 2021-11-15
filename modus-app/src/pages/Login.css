@@ -1,65 +1,112 @@
-/* The Modal (background) */
-.modal {
-  display: none; /* Hidden by default */
-  position: fixed; /* Stay in place */
-  z-index: 1; /* Sit on top */
-  left: 0;
-  top: 0;
-  width: 100%; /* Full width */
-  height: 100%; /* Full height */
-  overflow: auto; /* Enable scroll if needed */
-  background-color: rgb(0, 0, 0); /* Fallback color */
-  background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
-  padding-top: 60px;
+body {
+  background-color: #f3ebf6;
+  font-family: "Ubuntu", sans-serif;
 }
 
-/* Modal Content/Box */
-.modal-content {
-  background-color: #fefefe;
-  margin: 5px auto; /* 15% from the top and centered */
-  border: 1px solid #888;
-  width: 80%; /* Could be more or less, depending on screen size */
+.loginPage {
+  background-color: #ffffff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 400px;
+  height: 400px;
+  margin: 7em auto;
+  border-radius: 1.5em;
+  box-shadow: 0px 11px 35px 2px rgba(0, 0, 0, 0.14);
 }
 
-/* Bordered form */
-form {
-  border: 3px solid #f1f1f1;
+.loginContainer {
+  padding-left: 40px;
+  padding-right: 40px;
 }
 
-/* Full-width inputs */
-input[type="text"],
-input[type="password"] {
-  width: 100%;
-  padding: 12px 20px;
-  margin: 8px 0;
-  display: inline-block;
-  border: 1px solid #ccc;
-  box-sizing: border-box;
+.header {
+  padding-top: 40px;
+  margin-left: 24%;
+  margin-top: 1%;
+  color: #8c55aa;
+  font-family: "Ubuntu", sans-serif;
+  font-weight: bold;
+  font-size: 23px;
 }
 
-/* Set a style for all buttons */
-button {
-  background-color: #04aa6d;
-  color: white;
-  padding: 14px 20px;
-  margin: 8px 0;
+.loginText {
+  width: 76%;
+  color: rgb(38, 50, 56);
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: 1px;
+  background: rgba(136, 126, 126, 0.04);
+  padding: 10px 20px;
   border: none;
+  border-radius: 20px;
+  outline: none;
+  box-sizing: border-box;
+  border: 2px solid rgba(0, 0, 0, 0.02);
+  margin-bottom: 50px;
+  margin-left: 46px;
+  text-align: center;
+  margin-bottom: 27px;
+  font-family: "Ubuntu", sans-serif;
+}
+
+.passwordText {
+  width: 76%;
+  color: rgb(38, 50, 56);
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: 1px;
+  background: rgba(136, 126, 126, 0.04);
+  padding: 10px 20px;
+  border: none;
+  border-radius: 20px;
+  outline: none;
+  box-sizing: border-box;
+  border: 2px solid rgba(0, 0, 0, 0.02);
+  margin-bottom: 70px;
+  margin-left: 46px;
+  text-align: center;
+  padding-bottom: 10px;
+  font-family: "Ubuntu", sans-serif;
+}
+
+.loginText:focus,
+.passwordText:focus {
+  border: 2px solid rgba(0, 0, 0, 0.18) !important;
+}
+
+.login,
+.googleLogin,
+.facebookLogin {
   cursor: pointer;
-  width: 100%;
+  border-radius: 5em;
+  color: #fff;
+  background: linear-gradient(to right, #9c27b0, #e040fb);
+  border: 0;
+  /* padding-left: 40px;
+  padding-right: 40px; */
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  padding-top: 10px;
+  font-family: "Ubuntu", sans-serif;
+  font-size: 13px;
+  box-shadow: 0 0 20px 1px rgba(0, 0, 0, 0.04);
 }
 
-/* Add a hover effect for buttons */
-button:hover {
-  opacity: 0.8;
+.forget {
+  text-shadow: 0px 0px 3px rgba(117, 117, 117, 0.12);
+  color: #e1bee7;
+  padding-top: 15px;
 }
 
-/* Add padding to containers */
-.container {
-  padding: 16px;
+.register {
+  text-shadow: 0px 0px 3px rgba(117, 117, 117, 0.12);
+  color: #e1bee7;
+  padding-top: 15px;
 }
 
-/* The "Forgot password" text */
-span.psw {
-  float: right;
-  padding-top: 16px;
+a {
+  text-shadow: 0px 0px 3px rgba(117, 117, 117, 0.12);
+  color: #e1bee7;
+  text-decoration: none;
 }
