@@ -73,7 +73,9 @@ function LibraryCard( {entry} ) {
                   {entry.status}
                 </Grid>
                 <Grid item xs style={{width: 50, height:5}}>
-                      <Button> Analysis </Button>
+                  <Link to={`/individualAnalysis/${entry.title}`} style={{ textDecoration: 'none', color: '#474747' }}>
+                    Analysis
+                  </Link>
                 </Grid> 
               </Grid> 
             </Grid>
