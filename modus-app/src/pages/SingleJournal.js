@@ -19,8 +19,7 @@ const useStyles = makeStyles({
 });
 
 function SingleJournal() {
-  const history = useHistory();
-
+  
   const { title } = useParams();
   const [entry, setEntry] = useState('');
   
@@ -33,24 +32,11 @@ function SingleJournal() {
   }, 
   []);
 
-  const handleDeleteEntry = () => {
-    deleteJournalEntry(entry[0].jid)
-    .then(() => {
-      history.push('/library');
-      alert("Journal entry deleted");
-    }) 
-  }
-
   const classes = useStyles();
     return (
       <div>
           <Card className={classes.card}>
           <Grid container direction="column">
-            <Grid container style={{marginBottom: 5}} justifyContent='end'>
-              <IconButton onClick={() => handleDeleteEntry()}>
-                <DeleteIcon/>
-              </IconButton>
-            </Grid>
             <Grid container>
               <Grid container item>
                 <Grid item xs 
@@ -77,8 +63,6 @@ function SingleJournal() {
                   }}
             >
               {entry && <div  dangerouslySetInnerHTML={{__html: entry[0].text}} />}
-              
-              
             </Grid>
             <Grid item xs 
                   style={{
