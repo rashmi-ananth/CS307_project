@@ -396,8 +396,6 @@ function getJID() {
     const {v4: uuidv4} = require('uuid')
     return uuidv4()
 }
-// Using 'superagent' which will return a promise.
-var superagent = require('superagent')
 
 // This is isn't declared as `async` because it already returns a promise
 function delay() {
