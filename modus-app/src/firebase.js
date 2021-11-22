@@ -448,3 +448,79 @@ function plotPieChart(dict_t2e) {
     };
     // Plotly.newPlot('myDiv', data, layout);
 }
+
+
+  var FirestoreAdmin = {
+
+    previousFieldName: 'text',
+    newFieldName: 'text_new',
+
+    copyCollection: function (fromName, toName) {
+
+        FirestoreAdmin.getFromData(
+            fromName,
+            function (querySnapshot, error) {
+
+                if (ObjectUtil.isDefined(error)) {
+
+                    var toastMsg = 'Unexpected error while loading list: ' + StringUtil.toStr(error);
+                    Toaster.top(toastMsg);
+                    return;
+                }
+
+                var db = firebase.firestore();
+
+                querySnapshot.forEach(function (doc) {
+
+                    var docId = doc.id;
+                    Logr.debug('docId: ' + docId);
+
+                    var data = doc.data();
+                    if (FirestoreAdmin.newFieldName != null) {
+
+                        data[FirestoreAdmin.newFieldName] = data[FirestoreAdmin.previousFieldName];
+                        delete data[FirestoreAdmin.previousFieldName];
+                    }
+
+                    Logr.debug('data: ' + StringUtil.toStr(data));
+
+                    FirestoreAdmin.writeToData(toName, docId, data)
+                });
+            }
+        );
+    },
+
+    getFromData: function (fromName, onFromDataReadyFunc) {
+
+        var db = firebase.firestore();
+
+        var fromRef = db.collection(fromName);
+        fromRef
+            .get()
+            .then(function (querySnapshot) {
+
+                onFromDataReadyFunc(querySnapshot);
+            })
+            .catch(function (error) {
+
+                onFromDataReadyFunc(null, error);
+                console.log('Error getting documents: ', error);
+            });
+    },
+
+    writeToData: function (toName, docId, data) {
+
+        var db = firebase.firestore();
+        var toRef = db.collection(toName);
+
+        toRef
+            .doc(docId)
+            .set(data)
+            .then(function () {
+                console.log('Document set success');
+            })
+            .catch(function (error) {
+                console.error('Error adding document: ', error);
+            });
+    }
+}
